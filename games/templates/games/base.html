@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Domus Inferna - Where Souls Are Waged{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'games/css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+</head>
+<body>
+    <div class="noise-overlay"></div>
+    <div class="soul-flames"></div>
+    
+    <header class="main-header">
+        <nav class="nav-container">
+            <div class="logo">
+                <h1 class="glitch" data-text="Domus Inferna">Domus Inferna</h1>
+            </div>
+            <div class="nav-links">
+                <a href="{% url 'home' %}" class="nav-link">Home</a>
+                <a href="{% url 'games' %}" class="nav-link">Games</a>
+                <a href="{% url 'leaderboard' %}" class="nav-link">Leaderboard</a>
+                <a href="{% url 'profile' %}" class="nav-link">Your Soul</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="main-footer">
+        <p class="soul-counter">Souls Waged: <span id="soul-count">0</span></p>
+        <p class="disclaimer">Enter at your own risk. Your soul may be at stake.</p>
+    </footer>
+
+    <script src="{% static 'games/js/main.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html> 

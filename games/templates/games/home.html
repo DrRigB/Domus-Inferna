@@ -1,0 +1,95 @@
+{% extends 'games/base.html' %}
+{% load static %}
+
+{% block title %}Domus Inferna - Welcome to the Soul Casino{% endblock %}
+
+{% block content %}
+<div class="hero-section">
+    <h1 class="hero-title">Welcome to Domus Inferna</h1>
+    <p class="hero-subtitle">Where Souls Are Waged</p>
+    <a href="{% url 'games' %}" class="cta-button">Enter the Casino</a>
+</div>
+
+<section class="featured-games">
+    <h2 class="section-title">Featured Games</h2>
+    <div class="game-grid">
+        <div class="game-card">
+            <h3>Soul Roulette</h3>
+            <p>Spin the wheel of fate. Will you lose your soul or gain eternal wealth?</p>
+            <a href="{% url 'roulette' %}" class="btn">Play Now</a>
+        </div>
+        <div class="game-card">
+            <h3>Devil's Blackjack</h3>
+            <p>Face off against the Devil himself in a high-stakes game of blackjack.</p>
+            <a href="{% url 'blackjack' %}" class="btn">Play Now</a>
+        </div>
+        <div class="game-card">
+            <h3>Phantom Slots</h3>
+            <p>Pull the lever and pray to Lady Luck. Your soul hangs in the balance.</p>
+            <a href="{% url 'slots' %}" class="btn">Play Now</a>
+        </div>
+    </div>
+</section>
+
+<section class="leaderboard-preview">
+    <h2 class="section-title">Top Players</h2>
+    <div class="leaderboard-list">
+        {% for player in top_players %}
+        <div class="leaderboard-entry">
+            <span class="player-name">{{ player.name }}</span>
+            <span class="player-souls">{{ player.souls }} souls</span>
+        </div>
+        {% endfor %}
+    </div>
+    <a href="{% url 'leaderboard' %}" class="btn">View Full Leaderboard</a>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Hero section animation
+    gsap.from('.hero-title', {
+        y: 50,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out"
+    });
+
+    gsap.from('.hero-subtitle', {
+        y: 30,
+        opacity: 0,
+        duration: 1,
+        delay: 0.5,
+        ease: "power3.out"
+    });
+
+    gsap.from('.hero-cta .btn', {
+        y: 20,
+        opacity: 0,
+        duration: 0.5,
+        stagger: 0.2,
+        delay: 1,
+        ease: "power2.out"
+    });
+
+    // Game cards stagger animation
+    gsap.from('.game-card', {
+        y: 50,
+        opacity: 0,
+        duration: 0.5,
+        stagger: 0.2,
+        delay: 1.5,
+        ease: "power2.out"
+    });
+
+    // Leaderboard items animation
+    gsap.from('.leaderboard-item', {
+        x: -50,
+        opacity: 0,
+        duration: 0.3,
+        stagger: 0.1,
+        delay: 2,
+        ease: "power2.out"
+    });
+</script>
+{% endblock %} 

@@ -1,0 +1,65 @@
+{% extends 'games/base.html' %}
+{% load static %}
+
+{% block title %}Domus Inferna - Choose Your Game{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'games/css/games.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="games-container">
+    <div class="game-category">
+        <h2 class="category-title">Card Games</h2>
+        <div class="game-grid">
+            <div class="game-card">
+                <span class="difficulty">Medium</span>
+                <h3>Devil's Blackjack</h3>
+                <p>Face off against the Devil himself in a high-stakes game of blackjack. Your soul hangs in the balance with every hand.</p>
+                <div class="boss-info">
+                    <div class="boss-name">The Devil</div>
+                    <div class="boss-description">A cunning opponent who's been playing since the beginning of time.</div>
+                </div>
+                <a href="{% url 'blackjack' %}" class="play-btn">Play Now</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="game-category">
+        <h2 class="category-title">Wheel Games</h2>
+        <div class="game-grid">
+            <div class="game-card">
+                <span class="difficulty">Easy</span>
+                <h3>Soul Roulette</h3>
+                <p>Spin the wheel of fate. Will you lose your soul or gain eternal wealth?</p>
+                <div class="boss-info">
+                    <div class="boss-name">Lady Luck</div>
+                    <div class="boss-description">A fickle mistress who can turn fortune in an instant.</div>
+                </div>
+                <a href="{% url 'roulette' %}" class="play-btn">Play Now</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="game-category">
+        <h2 class="category-title">Slot Machines</h2>
+        <div class="game-grid">
+            <div class="game-card">
+                <span class="difficulty">Easy</span>
+                <h3>Phantom Slots</h3>
+                <p>Pull the lever and pray to Lady Luck. Your soul hangs in the balance.</p>
+                <div class="boss-info">
+                    <div class="boss-name">The Slot Demon</div>
+                    <div class="boss-description">A creature that feeds on the hopes of gamblers.</div>
+                </div>
+                <a href="{% url 'slots' %}" class="play-btn">Play Now</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="{% static 'games/js/games.js' %}"></script>
+{% endblock %}
