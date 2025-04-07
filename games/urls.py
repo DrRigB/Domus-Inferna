@@ -9,4 +9,6 @@ urlpatterns = [
     path('roulette/', views.roulette, name='roulette'),
     path('blackjack/', views.blackjack, name='blackjack'),
     path('slots/', views.slots, name='slots'),
+    path('register/', views.register, name='register'),
+    path('verify-email/<str:uidb64>/<str:token>/', views.verify_email, name='verify_email'),
 ] 

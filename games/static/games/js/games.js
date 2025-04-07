@@ -44,8 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Stagger animation for cards on page load
     gsap.from('.game-card', {
-        y: 50,
-        opacity: 0,
+        y: 20,
         duration: 0.5,
         stagger: 0.1,
         ease: "power2.out"

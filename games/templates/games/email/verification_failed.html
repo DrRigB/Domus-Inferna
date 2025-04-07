@@ -1,0 +1,16 @@
+{% extends 'games/base.html' %}
+
+{% block content %}
+<div class="login-container">
+    <div class="login-box">
+        <h2>Verification Failed</h2>
+        <div class="verification-message">
+            <p>The verification link is invalid or has expired.</p>
+            <p>Please request a new verification email or try registering again.</p>
+        </div>
+        <div class="form-footer">
+            <p><a href="{% url 'register' %}" class="link">Try Again</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %} 

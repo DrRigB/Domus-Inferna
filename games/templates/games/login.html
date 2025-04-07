@@ -1,0 +1,29 @@
+{% extends 'games/base.html' %}
+
+{% block content %}
+<div class="login-container">
+    <div class="login-box">
+        <h2>Enter the Infernal Realm</h2>
+        <form method="post" class="login-form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_username">Soul Name</label>
+                {{ form.username }}
+            </div>
+            <div class="form-group">
+                <label for="id_password">Soul Key</label>
+                {{ form.password }}
+            </div>
+            {% if form.errors %}
+            <div class="error-message">
+                Your soul name or soul key is incorrect. Please try again.
+            </div>
+            {% endif %}
+            <button type="submit" class="login-btn">Enter the Realm</button>
+        </form>
+        <div class="form-footer">
+            <p>No soul yet? <a href="{% url 'register' %}" class="link">Pledge Your Soul</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %} 

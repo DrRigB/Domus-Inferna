@@ -3,6 +3,10 @@
 
 {% block title %}Domus Inferna - Welcome to the Soul Casino{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'games/css/games.css' %}">
+{% endblock %}
+
 {% block content %}
 <div class="hero-section">
     <h1 class="hero-title">Welcome to Domus Inferna</h1>
@@ -16,17 +20,29 @@
         <div class="game-card">
             <h3>Soul Roulette</h3>
             <p>Spin the wheel of fate. Will you lose your soul or gain eternal wealth?</p>
-            <a href="{% url 'roulette' %}" class="btn">Play Now</a>
+            <div class="boss-info">
+                <div class="boss-name">Lady Luck</div>
+                <div class="boss-description">A fickle mistress who can turn fortune in an instant.</div>
+            </div>
+            <a href="{% url 'roulette' %}" class="play-btn">Play Now</a>
         </div>
         <div class="game-card">
             <h3>Devil's Blackjack</h3>
             <p>Face off against the Devil himself in a high-stakes game of blackjack.</p>
-            <a href="{% url 'blackjack' %}" class="btn">Play Now</a>
+            <div class="boss-info">
+                <div class="boss-name">The Devil</div>
+                <div class="boss-description">A cunning opponent who's been playing since the beginning of time.</div>
+            </div>
+            <a href="{% url 'blackjack' %}" class="play-btn">Play Now</a>
         </div>
         <div class="game-card">
             <h3>Phantom Slots</h3>
             <p>Pull the lever and pray to Lady Luck. Your soul hangs in the balance.</p>
-            <a href="{% url 'slots' %}" class="btn">Play Now</a>
+            <div class="boss-info">
+                <div class="boss-name">The Slot Demon</div>
+                <div class="boss-description">A creature that feeds on the hopes of gamblers.</div>
+            </div>
+            <a href="{% url 'slots' %}" class="play-btn">Play Now</a>
         </div>
     </div>
 </section>
@@ -41,11 +57,12 @@
         </div>
         {% endfor %}
     </div>
-    <a href="{% url 'leaderboard' %}" class="btn">View Full Leaderboard</a>
+    <a href="{% url 'leaderboard' %}" class="cta-button">View Full Leaderboard</a>
 </section>
 {% endblock %}
 
 {% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script>
     // Hero section animation
     gsap.from('.hero-title', {
@@ -63,19 +80,17 @@
         ease: "power3.out"
     });
 
-    gsap.from('.hero-cta .btn', {
+    gsap.from('.cta-button', {
         y: 20,
         opacity: 0,
         duration: 0.5,
-        stagger: 0.2,
         delay: 1,
         ease: "power2.out"
     });
 
     // Game cards stagger animation
     gsap.from('.game-card', {
-        y: 50,
-        opacity: 0,
+        y: 20,
         duration: 0.5,
         stagger: 0.2,
         delay: 1.5,
@@ -83,7 +98,7 @@
     });
 
     // Leaderboard items animation
-    gsap.from('.leaderboard-item', {
+    gsap.from('.leaderboard-entry', {
         x: -50,
         opacity: 0,
         duration: 0.3,

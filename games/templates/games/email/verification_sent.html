@@ -1,0 +1,17 @@
+{% extends 'games/base.html' %}
+
+{% block content %}
+<div class="login-container">
+    <div class="login-box">
+        <h2>Check Your Soul's Email</h2>
+        <div class="verification-message">
+            <p>We've sent a verification link to your email address. Please check your inbox and click the link to verify your soul pledge.</p>
+            <p>The link will expire in 24 hours.</p>
+            <p>If you don't see the email, please check your spam folder.</p>
+        </div>
+        <div class="form-footer">
+            <p>Need help? <a href="{% url 'login' %}" class="link">Return to Sign In</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %} 

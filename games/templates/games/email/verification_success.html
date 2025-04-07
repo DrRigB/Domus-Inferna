@@ -1,0 +1,16 @@
+{% extends 'games/base.html' %}
+
+{% block content %}
+<div class="login-container">
+    <div class="login-box">
+        <h2>Soul Pledge Verified</h2>
+        <div class="verification-message">
+            <p>Your soul has been successfully pledged to Domus Inferna!</p>
+            <p>You may now enter the infernal realm and partake in our games of chance.</p>
+        </div>
+        <div class="form-footer">
+            <p><a href="{% url 'games' %}" class="link">Enter the Games</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %} 

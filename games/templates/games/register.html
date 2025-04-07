@@ -1,0 +1,42 @@
+{% extends 'games/base.html' %}
+
+{% block content %}
+<div class="login-container">
+    <div class="login-box">
+        <h2>Pledge Your Soul</h2>
+        <form method="post" class="login-form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_username">Choose Your Soul Name</label>
+                {{ form.username }}
+            </div>
+            <div class="form-group">
+                <label for="id_email">Your Soul's Email</label>
+                {{ form.email }}
+            </div>
+            <div class="form-group">
+                <label for="id_password1">Create Soul Key</label>
+                {{ form.password1 }}
+                <small class="form-text">Your soul key must be at least 8 characters long and contain both letters and numbers.</small>
+            </div>
+            <div class="form-group">
+                <label for="id_password2">Confirm Soul Key</label>
+                {{ form.password2 }}
+            </div>
+            {% if form.errors %}
+            <div class="error-message">
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        {{ error }}
+                    {% endfor %}
+                {% endfor %}
+            </div>
+            {% endif %}
+            <button type="submit" class="login-btn">Pledge Your Soul</button>
+        </form>
+        <div class="form-footer">
+            <p>Already have a soul? <a href="{% url 'login' %}" class="link">Sign In</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %} 
