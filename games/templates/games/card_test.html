@@ -1,0 +1,83 @@
+{% extends 'games/base.html' %}
+{% load static %}
+
+{% block title %}Card Test - Domus Inferna{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'games/css/cards.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="card-test-container">
+    <h1>Card Deck Test</h1>
+    
+    <div class="controls">
+        <button id="shuffleBtn">Shuffle Deck</button>
+        <button id="drawBtn">Draw Card</button>
+        <button id="resetBtn">Reset Deck</button>
+        <p>Cards remaining: <span id="cardCount">52</span></p>
+    </div>
+
+    <div class="card-area">
+        <div class="card-stack" id="deck"></div>
+        <div class="drawn-cards" id="drawnCards"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'games/js/cardDeck.js' %}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const deck = new CardDeck();
+    const deckElement = document.getElementById('deck');
+    const drawnCardsElement = document.getElementById('drawnCards');
+    const cardCountElement = document.getElementById('cardCount');
+    const drawnCards = [];
+
+    function updateCardCount() {
+        cardCountElement.textContent = deck.getRemainingCards();
+    }
+
+    function createDeckVisual() {
+        deckElement.innerHTML = '';
+        for (let i = 0; i < Math.min(5, deck.getRemainingCards()); i++) {
+            const card = new Card('spade', 'Ace');
+            const cardElement = card.createCardElement();
+            cardElement.classList.add('card-back');
+            deckElement.appendChild(cardElement);
+        }
+    }
+
+    document.getElementById('shuffleBtn').addEventListener('click', function() {
+        deck.shuffle();
+        createDeckVisual();
+    });
+
+    document.getElementById('drawBtn').addEventListener('click', function() {
+        if (deck.getRemainingCards() > 0) {
+            const card = deck.drawCard();
+            const cardElement = card.createCardElement();
+            cardElement.classList.add('dealing');
+            drawnCardsElement.appendChild(cardElement);
+            drawnCards.push(card);
+            updateCardCount();
+            createDeckVisual();
+        }
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', function() {
+        deck.reset();
+        drawnCardsElement.innerHTML = '';
+        drawnCards.length = 0;
+        updateCardCount();
+        createDeckVisual();
+    });
+
+    // Initialize
+    deck.shuffle();
+    createDeckVisual();
+    updateCardCount();
+});
+</script>
+{% endblock %} 

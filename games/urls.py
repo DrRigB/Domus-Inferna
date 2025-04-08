@@ -11,4 +11,6 @@ urlpatterns = [
     path('slots/', views.slots, name='slots'),
     path('register/', views.register, name='register'),
     path('verify-email/<str:uidb64>/<str:token>/', views.verify_email, name='verify_email'),
+    path('card-test/', views.card_test, name='card_test'),
+    path('svg-card-test/', views.svg_card_test, name='svg_card_test'),
 ] 

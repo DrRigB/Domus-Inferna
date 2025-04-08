@@ -132,3 +132,9 @@ def blackjack(request):
 @login_required
 def slots(request):
     return render(request, 'games/slots.html')
+
+def card_test(request):
+    return render(request, 'games/card_test.html')
+
+def svg_card_test(request):
+    return render(request, 'games/svg_card_test.html')

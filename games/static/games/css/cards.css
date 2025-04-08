@@ -1,0 +1,269 @@
+.card {
+    width: 80px;
+    height: 110px;
+    position: relative;
+    perspective: 1000px;
+    cursor: pointer;
+    margin: 5px;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+}
+
+.card.flipped {
+    transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.card-front {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+    border: 2px solid #ff0000;
+    color: #fff;
+    overflow: hidden;
+    position: relative;
+}
+
+.card-front::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(50, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 70%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.card-back {
+    background: linear-gradient(135deg, #2a0000 0%, #1a0000 100%);
+    border: 2px solid #ff0000;
+    transform: rotateY(180deg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.card-back::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/static/games/images/card-back-pattern.png'), 
+                      radial-gradient(circle at center, rgba(50, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 70%);
+    background-blend-mode: overlay;
+    opacity: 0.3;
+    z-index: 1;
+}
+
+/* SVG Card Styling */
+.card-front svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5));
+    position: relative;
+    z-index: 2;
+    transition: all 0.3s ease;
+}
+
+.card-front svg path {
+    transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.card[data-suit="heart"] .card-front svg path,
+.card[data-suit="diamond"] .card-front svg path {
+    filter: drop-shadow(0 0 8px #ff0000);
+}
+
+.card[data-suit="club"] .card-front svg path,
+.card[data-suit="spade"] .card-front svg path {
+    filter: drop-shadow(0 0 8px #0000ff);
+}
+
+.card-corner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card-value {
+    font-size: 14px;
+    font-weight: bold;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.card-suit {
+    font-size: 12px;
+    margin-top: 1px;
+}
+
+.card-center {
+    font-size: 30px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-shadow: 0 0 10px currentColor;
+}
+
+/* Suit colors */
+.card[data-suit="heart"] .card-suit,
+.card[data-suit="diamond"] .card-suit,
+.card[data-suit="heart"] .card-value,
+.card[data-suit="diamond"] .card-value,
+.card[data-suit="heart"] .card-center,
+.card[data-suit="diamond"] .card-center {
+    color: #ff0000;
+    text-shadow: 0 0 10px #ff0000;
+}
+
+.card[data-suit="club"] .card-suit,
+.card[data-suit="spade"] .card-suit,
+.card[data-suit="club"] .card-value,
+.card[data-suit="spade"] .card-value,
+.card[data-suit="club"] .card-center,
+.card[data-suit="spade"] .card-center {
+    color: #ffffff;
+    text-shadow: 0 0 10px #ffffff;
+}
+
+/* Hover effects */
+.card:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 5px 20px rgba(255, 0, 0, 0.5);
+    z-index: 10;
+}
+
+.card:hover .card-front,
+.card:hover .card-back {
+    border-color: #ff3333;
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.7);
+}
+
+.card:hover .card-front svg {
+    filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.8));
+}
+
+.card:hover .card-front svg path {
+    filter: drop-shadow(0 0 12px currentColor);
+}
+
+/* Animations */
+@keyframes pulse {
+    0% {
+        filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5));
+        transform: scale(1);
+    }
+    50% {
+        filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.8));
+        transform: scale(1.05);
+    }
+    100% {
+        filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5));
+        transform: scale(1);
+    }
+}
+
+@keyframes bluePulse {
+    0% {
+        filter: drop-shadow(0 0 5px rgba(0, 0, 255, 0.5));
+        transform: scale(1);
+    }
+    50% {
+        filter: drop-shadow(0 0 15px rgba(0, 0, 255, 0.8));
+        transform: scale(1.05);
+    }
+    100% {
+        filter: drop-shadow(0 0 5px rgba(0, 0, 255, 0.5));
+        transform: scale(1);
+    }
+}
+
+/* Blackjack specific glow for winning hand */
+.blackjack-glow {
+    animation: blackjackGlow 2s infinite alternate;
+}
+
+@keyframes blackjackGlow {
+    0% {
+        box-shadow: 0 0 10px 5px rgba(255, 0, 0, 0.5);
+    }
+    100% {
+        box-shadow: 0 0 20px 10px rgba(255, 0, 0, 0.8);
+    }
+}
+
+/* Glow effect for face cards */
+.card[data-value="Ace"],
+.card[data-value="King"],
+.card[data-value="Queen"],
+.card[data-value="Jack"] {
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+}
+
+/* Special glow for aces */
+.card[data-value="Ace"] {
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+}
+
+/* Special glow for red suits */
+.card[data-suit="heart"],
+.card[data-suit="diamond"] {
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}
+
+/* Special glow for black suits */
+.card[data-suit="club"],
+.card[data-suit="spade"] {
+    box-shadow: 0 0 10px rgba(0, 0, 255, 0.5);
+}
+
+/* Card dealing animation */
+.card.dealing {
+    animation: dealCard 0.5s ease-out;
+}
+
+@keyframes dealCard {
+    0% {
+        transform: translateY(-100px) rotateY(180deg);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0) rotateY(0);
+        opacity: 1;
+    }
+}
+
+/* Card stack effect */
+.card-stack {
+    position: relative;
+}
+
+.card-stack .card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: transform 0.3s ease;
+}
+
+.card-stack .card:nth-child(1) { transform: translateY(0); }
+.card-stack .card:nth-child(2) { transform: translateY(2px); }
+.card-stack .card:nth-child(3) { transform: translateY(4px); }
+.card-stack .card:nth-child(4) { transform: translateY(6px); }
+.card-stack .card:nth-child(5) { transform: translateY(8px); } 

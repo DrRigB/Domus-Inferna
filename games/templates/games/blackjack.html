@@ -3,6 +3,25 @@
 
 {% block title %}Domus Inferna - Devil's Blackjack{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'games/css/blackjack.css' %}">
+<link rel="stylesheet" href="{% static 'games/css/cards.css' %}">
+<style>
+    /* Additional styles to ensure cards display horizontally */
+    .cards {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+    }
+    
+    .card {
+        display: inline-block !important;
+        float: none !important;
+        margin-right: 5px !important;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="game-container">
     <h1 class="game-title">Devil's Blackjack</h1>
@@ -41,10 +60,7 @@
 </div>
 {% endblock %}
 
-{% block extra_css %}
-<link rel="stylesheet" href="{% static 'games/css/blackjack.css' %}">
-{% endblock %}
-
 {% block extra_js %}
+<script src="{% static 'games/js/svgCards.js' %}"></script>
 <script src="{% static 'games/js/blackjack.js' %}"></script>
 {% endblock %} 
