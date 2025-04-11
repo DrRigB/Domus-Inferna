@@ -1,12 +1,16 @@
 .card {
-    width: 80px;
-    height: 110px;
+    flex: 0 0 auto !important;
+    width: 70px;
+    height: 100px;
     position: relative;
     perspective: 1000px;
-    cursor: pointer;
-    margin: 5px;
-    transform-style: preserve-3d;
-    transition: transform 0.6s;
+    margin: 0 5px 0 0 !important;
+    transition: transform 0.3s ease;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    float: none !important;
+    box-shadow: 0 0 12px rgba(255, 0, 0, 0.7);
+    transition: all 0.3s ease;
 }
 
 .card.flipped {
@@ -28,11 +32,15 @@
 }
 
 .card-front {
-    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-    border: 2px solid #ff0000;
-    color: #fff;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #0a0000 0%, #1a0000 100%);
+    border: 2px solid #800000;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
     overflow: hidden;
-    position: relative;
 }
 
 .card-front::before {
@@ -48,35 +56,48 @@
 }
 
 .card-back {
-    background: linear-gradient(135deg, #2a0000 0%, #1a0000 100%);
-    border: 2px solid #ff0000;
-    transform: rotateY(180deg);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #200 0%, #100 100%);
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
     overflow: hidden;
 }
 
 .card-back::before {
     content: '';
     position: absolute;
+    width: 60%;
+    height: 60%;
+    top: 20%;
+    left: 20%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%23600' d='M50 5L61 38L95 38L68 59L79 90L50 70L21 90L32 59L5 38L39 38Z'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.5;
+}
+
+.card-back:after {
+    content: '';
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('/static/games/images/card-back-pattern.png'), 
-                      radial-gradient(circle at center, rgba(50, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 70%);
-    background-blend-mode: overlay;
+    background-image: linear-gradient(45deg, #400 25%, transparent 25%, transparent 75%, #400 75%), 
+                      linear-gradient(45deg, #400 25%, transparent 25%, transparent 75%, #400 75%);
+    background-size: 10px 10px;
+    background-position: 0 0, 5px 5px;
     opacity: 0.3;
-    z-index: 1;
 }
 
 /* SVG Card Styling */
 .card-front svg {
     width: 100%;
     height: 100%;
-    filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5));
+    filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.7));
     position: relative;
     z-index: 2;
     transition: all 0.3s ease;
@@ -88,12 +109,13 @@
 
 .card[data-suit="heart"] .card-front svg path,
 .card[data-suit="diamond"] .card-front svg path {
-    filter: drop-shadow(0 0 8px #ff0000);
+    filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.9));
 }
 
 .card[data-suit="club"] .card-front svg path,
 .card[data-suit="spade"] .card-front svg path {
-    filter: drop-shadow(0 0 8px #0000ff);
+    filter: drop-shadow(0 0 8px rgba(150, 0, 0, 0.8)) 
+            drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
 }
 
 .card-corner {
@@ -103,23 +125,58 @@
 }
 
 .card-value {
-    font-size: 14px;
+    position: absolute;
+    font-size: 28px;
     font-weight: bold;
-    font-family: 'Orbitron', sans-serif;
+    color: #ffffff;
+    text-shadow: 0 0 8px rgba(255, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.8);
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 0, 0, 0.7);
+    z-index: 2;
+}
+
+.card-value.top {
+    top: 5px;
+    left: 5px;
+}
+
+.card-value.bottom {
+    bottom: 5px;
+    right: 5px;
+    transform: rotate(180deg);
 }
 
 .card-suit {
-    font-size: 12px;
-    margin-top: 1px;
+    position: absolute;
+    font-size: 24px;
+    color: #ffffff;
+    text-shadow: 0 0 8px rgba(255, 0, 0, 0.9);
+    z-index: 2;
+}
+
+.card-suit.top {
+    top: 5px;
+    right: 5px;
+}
+
+.card-suit.bottom {
+    bottom: 5px;
+    left: 5px;
+    transform: rotate(180deg);
 }
 
 .card-center {
-    font-size: 30px;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    text-shadow: 0 0 10px currentColor;
+    font-size: 32px;
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.9);
+    z-index: 1;
+    opacity: 0.9;
 }
 
 /* Suit colors */
@@ -130,7 +187,7 @@
 .card[data-suit="heart"] .card-center,
 .card[data-suit="diamond"] .card-center {
     color: #ff0000;
-    text-shadow: 0 0 10px #ff0000;
+    text-shadow: 0 0 12px #ff0000;
 }
 
 .card[data-suit="club"] .card-suit,
@@ -140,13 +197,14 @@
 .card[data-suit="club"] .card-center,
 .card[data-suit="spade"] .card-center {
     color: #ffffff;
-    text-shadow: 0 0 10px #ffffff;
+    text-shadow: 0 0 12px rgba(255, 0, 0, 0.9),
+                 0 0 20px rgba(255, 0, 0, 0.7);
 }
 
 /* Hover effects */
 .card:hover {
     transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 5px 20px rgba(255, 0, 0, 0.5);
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.8), 0 0 5px rgba(255, 0, 0, 0.5) inset;
     z-index: 10;
 }
 
@@ -197,16 +255,18 @@
 
 /* Blackjack specific glow for winning hand */
 .blackjack-glow {
-    animation: blackjackGlow 2s infinite alternate;
+    animation: blackjackGlow 2s infinite !important;
 }
 
 @keyframes blackjackGlow {
-    0% {
-        box-shadow: 0 0 10px 5px rgba(255, 0, 0, 0.5);
-    }
-    100% {
-        box-shadow: 0 0 20px 10px rgba(255, 0, 0, 0.8);
-    }
+    0% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+    50% { box-shadow: 0 0 30px rgba(255, 215, 0, 1); }
+    100% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+}
+
+/* Glow effect for ALL cards */
+.card {
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
 }
 
 /* Glow effect for face cards */
@@ -214,24 +274,41 @@
 .card[data-value="King"],
 .card[data-value="Queen"],
 .card[data-value="Jack"] {
-    box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
 }
 
 /* Special glow for aces */
 .card[data-value="Ace"] {
-    box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.9);
 }
 
 /* Special glow for red suits */
 .card[data-suit="heart"],
 .card[data-suit="diamond"] {
-    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+    box-shadow: 0 0 18px rgba(255, 0, 0, 0.7);
 }
 
 /* Special glow for black suits */
 .card[data-suit="club"],
 .card[data-suit="spade"] {
-    box-shadow: 0 0 10px rgba(0, 0, 255, 0.5);
+    box-shadow: 0 0 18px rgba(150, 0, 0, 0.7),
+                0 0 30px rgba(255, 0, 0, 0.4);
+    animation: blackSuitPulse 3s infinite alternate;
+}
+
+@keyframes blackSuitPulse {
+    0% {
+        box-shadow: 0 0 18px rgba(150, 0, 0, 0.7),
+                    0 0 30px rgba(255, 0, 0, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 25px rgba(150, 0, 0, 0.8),
+                    0 0 40px rgba(255, 0, 0, 0.5);
+    }
+    100% {
+        box-shadow: 0 0 18px rgba(150, 0, 0, 0.7),
+                    0 0 30px rgba(255, 0, 0, 0.4);
+    }
 }
 
 /* Card dealing animation */
@@ -241,11 +318,11 @@
 
 @keyframes dealCard {
     0% {
-        transform: translateY(-100px) rotateY(180deg);
+        transform: translateX(-50px);
         opacity: 0;
     }
     100% {
-        transform: translateY(0) rotateY(0);
+        transform: translateX(0);
         opacity: 1;
     }
 }
@@ -266,4 +343,12 @@
 .card-stack .card:nth-child(2) { transform: translateY(2px); }
 .card-stack .card:nth-child(3) { transform: translateY(4px); }
 .card-stack .card:nth-child(4) { transform: translateY(6px); }
-.card-stack .card:nth-child(5) { transform: translateY(8px); } 
+.card-stack .card:nth-child(5) { transform: translateY(8px); }
+
+/* Face-down card styling - demonic back */
+.face-down {
+    background: #0a0000;
+    border: 2px solid #800000;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
+} 

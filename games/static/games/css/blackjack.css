@@ -4,26 +4,25 @@
     padding: 20px;
     color: #ffffff;
     font-family: 'Orbitron', sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .game-title {
     text-align: center;
     font-size: 3rem;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     color: #ff0000;
     text-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
     animation: demonicPulse 3s infinite;
 }
 
-/* Main game layout - horizontal orientation */
+/* Main game layout - 2-column grid with betting/controls on left, hands on right */
 .game-area {
     display: grid;
-    grid-template-columns: 3fr 1fr;
-    grid-template-rows: auto auto;
-    grid-template-areas: 
-        "dealer-area controls"
-        "player-area status";
-    gap: 15px;
+    grid-template-columns: 300px 1fr;
+    gap: 20px;
     background: rgba(10, 0, 0, 0.8);
     border: 2px solid #800000;
     border-radius: 15px;
@@ -31,38 +30,87 @@
     box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
 }
 
-.dealer-area {
-    grid-area: dealer-area;
-    margin-bottom: 10px;
-}
-
-.player-area {
-    grid-area: player-area;
-    margin-top: 10px;
-}
-
-.game-controls {
-    grid-area: controls;
+/* Left column - controls and info */
+.game-controls-container {
+    grid-column: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    gap: 15px;
-}
-
-.game-status {
-    grid-area: status;
-    text-align: center;
-    padding: 15px;
-    background: rgba(20, 0, 0, 0.7);
+    gap: 20px;
+    background: rgba(15, 0, 0, 0.6);
     border-radius: 10px;
+    padding: 15px;
     border: 1px solid #800000;
 }
 
-/* Card areas */
+/* Game Info Panel - Now in left column */
+.game-info-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background: linear-gradient(to right, #1a0000, #2a0000);
+    border: 2px solid #800000;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+}
+
+.souls-display {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.souls-icon {
+    font-size: 2rem;
+    animation: flame 2s infinite alternate;
+}
+
+.souls-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.souls-label {
+    font-size: 1rem;
+    color: #ddbca9;
+}
+
+.souls-count {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #ff0000;
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+}
+
+.status-message {
+    font-size: 1.2rem;
+    color: #ddbca9;
+    text-shadow: 0 0 5px rgba(255, 200, 150, 0.5);
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #800000;
+    text-align: center;
+    width: 100%;
+}
+
+/* Right column - player and dealer hands */
+.hands-container {
+    grid-column: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Dealer and player areas */
 .dealer-area, .player-area {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
+    background: rgba(20, 0, 0, 0.5);
+    border-radius: 10px;
+    padding: 15px;
+    border: 1px solid #800000;
 }
 
 .dealer-area h2, .player-area h2 {
@@ -72,161 +120,69 @@
     text-shadow: 0 0 10px rgba(255, 200, 150, 0.5);
 }
 
-/* Cards display - horizontal */
+/* Cards display */
 .cards {
-    display: flex !important;
-    flex-direction: row !important;
-    flex-wrap: nowrap !important;
-    gap: 8px;
-    padding: 10px;
-    background: rgba(20, 0, 0, 0.5);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 10px;
+    padding: 15px;
+    background: rgba(20, 0, 0, 0.3);
     border-radius: 10px;
     border: 1px solid #800000;
     min-height: 120px;
-    align-items: center !important;
-    justify-content: flex-start !important;
+    align-items: center;
+    justify-content: flex-start;
     width: 100%;
     overflow-x: visible;
 }
 
-/* Individual card - infernal styling */
-.card {
-    flex: 0 0 auto !important;
-    width: 70px;
-    height: 100px;
-    position: relative;
-    perspective: 1000px;
-    margin: 0 5px 0 0 !important;
-    transition: transform 0.3s ease;
-    display: inline-block !important;
-    vertical-align: middle !important;
-    float: none !important;
-    box-shadow: 0 0 8px rgba(255, 0, 0, 0.5);
-    transition: all 0.3s ease;
-}
-
-.card:hover {
-    transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 0 15px rgba(255, 0, 0, 0.8), 0 0 5px rgba(255, 0, 0, 0.5) inset;
-    z-index: 10;
-}
-
-/* Card front - demonic styling */
-.card-front {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-    border-radius: 10px;
-    background: linear-gradient(135deg, #1a0000 0%, #2a0000 100%);
-    border: 2px solid #800000;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    overflow: hidden;
-}
-
-/* SVG styling for infernal theme */
-.card-front svg {
-    filter: drop-shadow(0 0 3px rgba(255, 0, 0, 0.5));
-}
-
-/* Make red suits glow devilishly */
-.card[data-suit="heart"] .card-front svg,
-.card[data-suit="diamond"] .card-front svg {
-    filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.8));
-}
-
-/* Make black suits have a sinister glow */
-.card[data-suit="club"] .card-front svg,
-.card[data-suit="spade"] .card-front svg {
-    filter: drop-shadow(0 0 5px rgba(150, 0, 0, 0.7));
-}
-
-/* Face-down card styling - demonic back */
-.face-down {
-    background: #1a0000;
-    border: 2px solid #800000;
-    border-radius: 10px;
-    box-shadow: 0 0 8px rgba(255, 0, 0, 0.5);
-}
-
-.card-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #300 0%, #200 100%);
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
-    overflow: hidden;
-}
-
-/* Add pentagram pattern to card backs */
-.card-back:before {
-    content: '';
-    position: absolute;
-    width: 60%;
-    height: 60%;
-    top: 20%;
-    left: 20%;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%23600' d='M50 5L61 38L95 38L68 59L79 90L50 70L21 90L32 59L5 38L39 38Z'/%3E%3C/svg%3E");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    opacity: 0.5;
-}
-
-/* Subtle pattern for card backs */
-.card-back:after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: linear-gradient(45deg, #400 25%, transparent 25%, transparent 75%, #400 75%), 
-                      linear-gradient(45deg, #400 25%, transparent 25%, transparent 75%, #400 75%);
-    background-size: 10px 10px;
-    background-position: 0 0, 5px 5px;
-    opacity: 0.3;
-}
-
 /* Score displays */
 .score-display {
-    font-size: 1.25rem;
-    padding: 5px 10px;
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 5px;
-    border: 1px solid #ff0000;
+    font-size: 1.5rem;
+    padding: 8px 15px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 8px;
+    border: 2px solid #ff0000;
     color: #ffffff;
     display: inline-block;
     text-align: center;
     font-weight: bold;
-    min-width: 40px;
-}
-
-/* Score change animation */
-@keyframes scoreChange {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
-}
-
-.score-change {
-    animation: scoreChange 0.5s ease-in-out;
+    min-width: 50px;
 }
 
 .player-score {
     color: #00ff00;
-    text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+    text-shadow: 0 0 10px rgba(0, 255, 0, 0.7);
+    border-color: #00ff00;
 }
 
 .dealer-score {
     color: #ff9900;
-    text-shadow: 0 0 5px rgba(255, 153, 0, 0.5);
+    text-shadow: 0 0 10px rgba(255, 153, 0, 0.7);
+    border-color: #ff9900;
+}
+
+/* Game controls */
+.game-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.game-status {
+    text-align: center;
+    padding: 15px;
+    background: rgba(20, 0, 0, 0.7);
+    border-radius: 10px;
+    border: 1px solid #800000;
+    margin-top: 15px;
 }
 
 /* Button styling */
 .game-btn {
-    padding: 12px 25px;
+    padding: 15px 25px;
     font-size: 1.2rem;
     font-family: 'Orbitron', sans-serif;
     font-weight: bold;
@@ -254,23 +210,51 @@
     box-shadow: none;
 }
 
-.status-message {
-    font-size: 1.3rem;
-    margin-bottom: 15px;
+/* Betting section */
+.betting-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #800000;
+}
+
+.betting-section h3 {
+    margin: 0;
     color: #ddbca9;
+    font-size: 1.3rem;
+    text-shadow: 0 0 10px rgba(255, 200, 150, 0.5);
+}
+
+.bet-display {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.2rem;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    border: 1px solid #800000;
+}
+
+.current-bet {
+    font-weight: bold;
+    color: #ff9900;
+    text-shadow: 0 0 8px rgba(255, 153, 0, 0.7);
 }
 
 .bet-controls {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-between;
     gap: 10px;
     margin-top: 10px;
 }
 
 .bet-btn {
-    padding: 8px 15px;
-    font-size: 1rem;
+    padding: 10px;
+    font-size: 1.1rem;
     font-family: 'Orbitron', sans-serif;
     color: #ffffff;
     background: linear-gradient(to bottom, #6a0000, #4a0000);
@@ -278,6 +262,8 @@
     border-radius: 5px;
     cursor: pointer;
     transition: all 0.3s ease;
+    flex: 1 0 calc(50% - 5px);
+    text-align: center;
 }
 
 .bet-btn:hover {
@@ -294,92 +280,51 @@
     box-shadow: none;
 }
 
-.souls-display {
-    margin-bottom: 15px;
-    font-size: 1.2rem;
-    color: #ff9900;
-    font-weight: bold;
+/* Stats section */
+.stats-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #800000;
 }
 
-.souls-count {
-    color: #ff0000;
+.stats-section h3 {
+    margin: 0;
+    color: #ddbca9;
+    font-size: 1.3rem;
+    text-shadow: 0 0 10px rgba(255, 200, 150, 0.5);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #800000;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: #ddbca9;
+}
+
+.stat-value {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #ffffff;
     text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
 }
 
-.blackjack-glow {
-    animation: demonicGlow 2s infinite !important;
-}
-
 /* Animations */
-@keyframes pulse {
-    0% { box-shadow: 0 0 8px rgba(255, 0, 0, 0.5); }
-    50% { box-shadow: 0 0 15px rgba(255, 0, 0, 0.8); }
-    100% { box-shadow: 0 0 8px rgba(255, 0, 0, 0.5); }
-}
-
-@keyframes float {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(-3px); }
-    100% { transform: translateY(0); }
-}
-
-@keyframes glow {
-    0% { filter: brightness(1) drop-shadow(0 0 3px rgba(255, 0, 0, 0.5)); }
-    50% { filter: brightness(1.2) drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)); }
-    100% { filter: brightness(1) drop-shadow(0 0 3px rgba(255, 0, 0, 0.5)); }
-}
-
-@keyframes blackjackGlow {
-    0% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
-    50% { box-shadow: 0 0 30px rgba(255, 215, 0, 1); }
-    100% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
-}
-
-/* Dealing animation */
-.dealing {
-    animation: dealCard 0.5s ease-out;
-}
-
-@keyframes dealCard {
-    0% {
-        transform: translateX(-50px);
-        opacity: 0;
-    }
-    100% {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .game-title {
-        font-size: 2rem;
-    }
-    
-    .game-area {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto auto auto;
-        grid-template-areas: 
-            "dealer-area"
-            "player-area"
-            "controls"
-            "status";
-        padding: 15px;
-    }
-    
-    .game-controls {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-    
-    .cards {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-}
-
 @keyframes demonicPulse {
     0% { text-shadow: 0 0 15px rgba(255, 0, 0, 0.8); }
     25% { text-shadow: 0 0 20px rgba(255, 0, 0, 1), 0 0 30px rgba(100, 0, 0, 0.5); }
@@ -388,10 +333,34 @@
     100% { text-shadow: 0 0 15px rgba(255, 0, 0, 0.8); }
 }
 
-@keyframes demonicGlow {
-    0% { box-shadow: 0 0 10px rgba(255, 0, 0, 0.5); }
-    25% { box-shadow: 0 0 20px rgba(255, 0, 0, 0.8), 0 0 30px rgba(255, 215, 0, 0.5); }
-    50% { box-shadow: 0 0 15px rgba(150, 0, 0, 0.7); }
-    75% { box-shadow: 0 0 25px rgba(255, 0, 0, 0.9), 0 0 35px rgba(255, 215, 0, 0.6); }
-    100% { box-shadow: 0 0 10px rgba(255, 0, 0, 0.5); }
+@keyframes flame {
+    0% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1); opacity: 0.8; }
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+    .game-title {
+        font-size: 2rem;
+    }
+    
+    .game-area {
+        grid-template-columns: 1fr;
+    }
+    
+    .game-controls-container {
+        grid-column: 1;
+        order: 2;
+    }
+    
+    .hands-container {
+        grid-column: 1;
+        order: 1;
+    }
+    
+    .cards {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
 } 

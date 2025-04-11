@@ -22,11 +22,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const dealButton = document.querySelector('.deal-btn');
     const betControls = document.querySelector('.bet-controls');
     
-    // Add souls display
-    const soulsDisplay = document.createElement('div');
-    soulsDisplay.className = 'souls-display';
-    soulsDisplay.innerHTML = `<p>Souls: <span class="souls-count">${playerSouls}</span></p>`;
-    document.querySelector('.game-status').prepend(soulsDisplay);
+    // Update souls display
+    function updateSoulsDisplay() {
+        document.querySelector('.souls-count').textContent = playerSouls;
+        
+        // Disable bet buttons if player doesn't have enough souls
+        betButtons.forEach(button => {
+            const betAmount = parseInt(button.dataset.amount);
+            button.disabled = betAmount > playerSouls;
+        });
+    }
     
     // Add score displays
     const playerScoreDisplay = document.createElement('div');
@@ -105,16 +110,6 @@ document.addEventListener('DOMContentLoaded', function() {
             createNewDeck();
         }
         return deck.pop();
-    }
-    
-    function updateSoulsDisplay() {
-        document.querySelector('.souls-count').textContent = playerSouls;
-        
-        // Disable bet buttons if player doesn't have enough souls
-        betButtons.forEach(button => {
-            const betAmount = parseInt(button.dataset.amount);
-            button.disabled = betAmount > playerSouls;
-        });
     }
     
     function placeBet(amount) {

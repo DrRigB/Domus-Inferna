@@ -6,25 +6,23 @@
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'games/css/blackjack.css' %}">
 <link rel="stylesheet" href="{% static 'games/css/cards.css' %}">
-<style>
-    /* Additional styles to ensure cards display horizontally */
-    .cards {
-        display: flex !important;
-        flex-direction: row !important;
-        flex-wrap: nowrap !important;
-    }
-    
-    .card {
-        display: inline-block !important;
-        float: none !important;
-        margin-right: 5px !important;
-    }
-</style>
 {% endblock %}
 
 {% block content %}
 <div class="game-container">
     <h1 class="game-title">Devil's Blackjack</h1>
+    
+    <!-- Game Info Panel - Dedicated area for souls and status -->
+    <div class="game-info-panel">
+        <div class="souls-display">
+            <div class="souls-icon">🔥</div>
+            <div class="souls-text">
+                <span class="souls-label">Souls:</span>
+                <span class="souls-count">1000</span>
+            </div>
+        </div>
+        <div class="status-message">Place your bet to begin</div>
+    </div>
     
     <div class="game-area">
         <div class="dealer-area">
@@ -48,7 +46,6 @@
         </div>
         
         <div class="game-status">
-            <p class="status-message">Place your bet to begin</p>
             <div class="bet-controls">
                 <button class="bet-btn" data-amount="10">10</button>
                 <button class="bet-btn" data-amount="25">25</button>
